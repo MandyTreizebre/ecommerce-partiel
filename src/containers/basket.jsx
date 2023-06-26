@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom'
 //on importe la state de basket de redux + son/ses actions
 
 
