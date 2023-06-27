@@ -1,18 +1,19 @@
 import {useState, useEffect} from 'react'
-import { Link } from 'react-router-dom'
-
-import {useSelector, useDispatch} from "react-redux"
-
 import axios from 'axios'
+
 //import des states globales product et basket et de leurs actions (ajout au panier, chargement des produits)
 import { getAllProducts, selectProduct } from '../slices/productSlice'
+import { changeBasket, selectBasket} from '../slices/basketSlice'
+import {useSelector, useDispatch} from "react-redux"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 
+
 const Home = (props) => {
     //récupération des states et de la fonction useDispatch
     const Products = useSelector(selectProduct)
+    const Panier = useSelector(selectBasket)
     const dispatch = useDispatch()
     
     //initialisation d'une state min (0) et d'une state max (15)
@@ -39,9 +40,7 @@ const Home = (props) => {
         if(min >= 15 ){
             setMin(min -15)
             setMax(max -15)
-            console.log(min)
          //on met à jour les states min et max   
-         dispatch(getAllProducts(res.data))
         }    
     }
     
@@ -51,8 +50,6 @@ const Home = (props) => {
         if(max + 15 <= Products.product.length) {
             setMin(min +15)
             setMax(max +15)
-            console.log(max)
-            dispatch(getAllProducts(res.data))
         }
     }
     
@@ -60,30 +57,38 @@ const Home = (props) => {
     const addProduct = (oldBasket, newProduct) => {
         //la state lorsqu'on la récup de redux est en mode read only (lecture seule)
         //je transforme l'objet en format json puis le retransforme en objet pour le stocker dans myBasket. Il est maintenant modifiable
-        let json = JSON.stringify(res.data)
-        let myBasket = JSON.parse(json)
-        
+        let myBasket = JSON.parse(JSON.stringify(oldBasket))
+
+
+        console.log("Click sur addProduct")
+
         //on check si le produit que l'on veut mettre dans le panier existe déjà (findIndex renvoi true ou false)
-        
+        let same = myBasket.findIndex((b)=>b.infos.id === newProduct.id)
         //si il n'est pastrouvé
-        
+        if (same === -1){
             //on crée un objet product qui récup les infos de newProduct et on ajoute une propriété quantity
-            
+            let product = {
+                infos: newProduct, 
+                quantity: 1
+            }
             //on push dans le panier le nouveau produit qu'on stock dans une nouvelle variable
-            
+            let finalBasket = [...myBasket, product]
+            console.log(finalBasket)
             //on dispatch dans le store
-            
+            dispatch(changeBasket(finalBasket)) // remplace la valeur du panier par le nouveau panier 
+        }  else {  
         //sinon
-        
             //on met à jour la quantité sur le produit déjà présent
-            
+            myBasket[same].quantity +=1
             //on dispatch le panier dans le store
-            
-            
+            dispatch(changeBasket(myBasket))
+        }    
+       
     }
     
     return (
         <main>
+            {console.log("blabla", Panier)}
             <h1>Page d'accueil</h1>
             
             {Products.product.length > 0 && <div className="list-item">
@@ -91,14 +96,21 @@ const Home = (props) => {
                     return (<li key={product.id} className="item">
                         <img src={product.thumbnailUrl}/>
                         <h2>{product.title}</h2>
+                        <button onClick={()=>{
+                          addProduct(Panier.basket, product) 
+
+                        } } 
+                        className='add-basket'
+                        >
+                           <FontAwesomeIcon icon={faCirclePlus} className='icon-add-item'/>
+                        </button>
                     </li>)
                 })}
             </div>}
 
-            <button onClick={onClickPrev}>Previous</button>
-            <button onClick={onClickNext}>Next</button>
+            <button onClick={onClickPrev} className='home-button'>Previous</button>
+            <button onClick={onClickNext} className='home-button'>Next</button>
 
-            
         </main>
     )
 }

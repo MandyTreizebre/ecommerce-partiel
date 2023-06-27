@@ -14,7 +14,11 @@ function App() {
   return (
     <div>
       <Header />
-      <Home />
+      <Routes>
+        <Route exatch path="/" element={<Home />} />
+        <Route exatch path="basket" element={<Basket />} />
+      </Routes>
+      
     </div>
   )
 }

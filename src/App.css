@@ -8,13 +8,6 @@ body {
   font-family: 'Raleway', sans-serif;
   text-align: center;
 }
-main {
-  text-align: center;
-}
-
-.container {
-  text-align: center;
-}
 
 /*Barre de navigation*/
 nav span {
@@ -46,7 +39,33 @@ nav span {
   color: white;
   font-size: 1.5em;
 }
-.product-item {
+
+.list-item {
+  display: flex;
+  width: 90%;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+  gap: 20px;
+}
+
+.item{
+  list-style-type: none;
+  width: 40%;
+  border: 3px solid #865496;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.icon-add-item {
+  color: #865496;
+}
+
+.home-button {
+  margin: 20px;
+  background-color: #865496;
+}
+/*.product-item {
     display: inline-block;
     width: 25%;
     border: 2px solid #865496;
@@ -56,45 +75,45 @@ nav span {
     vertical-align: top;
     text-align: center;
     
-}
+}*/
 
-.productImage {
+/*.productImage {
   width: 150px;
   height: 150px;
-}
+}*/
 
-.add-basket {
+/*.add-basket {
   cursor: pointer;
   padding: 3px;
-}
+}*/
 
-.fa-plus-circle:before {
+/*.fa-plus-circle:before {
     content: "\f055";
     font-family: "FontAwesome";
     color: #865496;
     font-size: 40px;
-}
+}*/
 
-.fa-arrow-left:before {
+/*.fa-arrow-left:before {
   font-family: "FontAwesome";
   color: #865496;
   font-size: 40px;
-}
+}*/
 
-.fa-arrow-right:before {
+/*.fa-arrow-right:before {
   font-family: "FontAwesome";
   color: #865496;
   font-size: 40px;
-}
+}*/
 
-.direction {
+/*.direction {
   margin-top: 50px;
   margin-bottom: 50px;
-}
+}*/
 
-.direction span {
+/*.direction span {
   margin: 0 3%;
-}
+}*/
 
 .basket-item {
   list-style: none;
@@ -104,10 +123,10 @@ nav span {
 
 }
 
-.basket-item img {
+/*.basket-item img {
   display: inline-block;
   width: 30%;
-}
+}*/
 
 .basket-item .info {
   display: inline-block;
@@ -132,9 +151,9 @@ nav span {
   cursor: pointer;
 }
 
-.pn-buttons {
+/*.pn-buttons {
   margin: 50px;
-}
+}*/
 @media only screen and (max-width: 900px) {
   .nav-title {
     width: 20%;
